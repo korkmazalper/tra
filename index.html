@@ -12,14 +12,16 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
                         url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         .navbar {
@@ -91,10 +93,12 @@
             font-weight: bold;
         }
 
-        .main-container {
-            flex: 1;
+        .view-section {
+            min-height: 100vh;
             padding: 120px 8% 40px 8%;
-            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .hero-section {
@@ -197,16 +201,16 @@
             font-weight: bold;
         }
 
-        .page-section {
+        .page-content-box {
             background: rgba(15, 15, 15, 0.9);
             padding: 40px;
             border-radius: 12px;
-            margin-top: 20px;
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+            width: 100%;
         }
 
-        .page-section h2 {
+        .page-content-box h2 {
             font-size: 32px;
             margin-bottom: 20px;
             color: #00d2ff;
@@ -243,6 +247,19 @@
             flex-direction: column;
             gap: 15px;
             max-width: 500px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #00d2ff;
+            font-weight: bold;
         }
 
         .contact-form input, .contact-form textarea {
@@ -252,6 +269,7 @@
             background: rgba(255,255,255,0.1);
             color: #fff;
             font-size: 16px;
+            width: 100%;
         }
 
         .contact-form button {
@@ -264,6 +282,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: background 0.3s;
+            margin-top: 10px;
         }
 
         .contact-form button:hover {
@@ -274,11 +293,11 @@
 <body>
 
     <nav class="navbar">
-        <a href="#" class="nav-logo">🌐 Global Wanderlust</a>
+        <a href="#home" class="nav-logo">🌐 Global Wanderlust</a>
         <div class="nav-links">
-            <a href="#" id="linkHome">Home</a>
-            <a href="#" id="linkAbout">About Us</a>
-            <a href="#" id="linkContact">Contact Us</a>
+            <a href="#home" id="linkHome">Home</a>
+            <a href="#about" id="linkAbout">About Us</a>
+            <a href="#contact" id="linkContact">Contact Us</a>
         </div>
         <div class="search-container" id="navSearchGroup">
             <input type="text" id="searchKeyword" placeholder="Enter keyword (beach, temple, country)...">
@@ -287,26 +306,25 @@
         </div>
     </nav>
 
-    <main class="main-container">
-        
-        <div id="homeView">
-            <section class="hero-section">
-                <h1>Explore Your Next Dream Destination</h1>
-                <p>
-                    Welcome to Global Wanderlust, your ultimate digital companion for discovering breathtaking getaway spots around the globe. Whether you crave the tranquil shores of tropical beaches, the mystical allure of ancient historic temples, or the dynamic energy of vibrant international countries, we curate perfectly tailored recommendations to spark your next adventure.
-                </p>
-                <div class="social-icons">
-                    <a href="#">f</a>
-                    <a href="#">t</a>
-                    <a href="#">i</a>
-                    <a href="#">y</a>
-                </div>
-            </section>
-            
-            <div id="recommendationResults" class="results-grid"></div>
+    <section id="home" class="view-section">
+        <div class="hero-section">
+            <h1>Explore Your Next Dream Destination</h1>
+            <p>
+                Welcome to Global Wanderlust, your ultimate digital companion for discovering breathtaking getaway spots around the globe. Whether you crave the tranquil shores of tropical beaches, the mystical allure of ancient historic temples, or the dynamic energy of vibrant international countries, we curate perfectly tailored recommendations to spark your next adventure.
+            </p>
+            <div class="social-icons">
+                <a href="#">f</a>
+                <a href="#">t</a>
+                <a href="#">i</a>
+                <a href="#">y</a>
+            </div>
         </div>
+        
+        <div id="recommendationResults" class="results-grid"></div>
+    </section>
 
-        <div id="aboutView" class="page-section" style="display: none;">
+    <section id="about" class="view-section">
+        <div class="page-content-box">
             <h2>About Us</h2>
             <p style="line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
                 Global Wanderlust is a premier travel intelligence enterprise dedicated to bridges the gap between avid explorers and their idyllic vacation destinations. Founded by a group of passionate globetrotters and software engineers, our system processes cultural, visual, and geographic patterns to ensure your itinerary aligns with your deep travel desires.
@@ -333,19 +351,33 @@
                 </div>
             </div>
         </div>
+    </section>
 
-        <div id="contactView" class="page-section" style="display: none;">
+    <section id="contact" class="view-section">
+        <div class="page-content-box">
             <h2>Contact Us</h2>
-            <p style="margin-bottom: 20px; color: #e0e0e0;">Have questions or want customized updates? Leave us a message below.</p>
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!'); this.reset();">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email Address" required>
-                <textarea rows="5" placeholder="Write your message here..." required></textarea>
-                <button type="submit">Submit Message</button>
+            <p style="margin-bottom: 10px; color: #e0e0e0;">Have questions or want customized updates? Leave us a message below.</p>
+            
+            <form id="contactForm" class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!'); this.reset();">
+                <div class="form-group">
+                    <label for="contactName">Name</label>
+                    <input type="text" id="contactName" name="name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" name="email" placeholder="Enter your email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                </div>
+                
+                <button type="submit" id="btnSubmitContact">Submit</button>
             </form>
         </div>
-
-    </main>
+    </section>
 
     <script src="travel_recommendation.js"></script>
 </body>
