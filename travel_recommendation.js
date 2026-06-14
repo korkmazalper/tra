@@ -16,18 +16,35 @@ function switchView(viewName) {
         aboutView.style.display = 'none';
         contactView.style.display = 'none';
         searchGroup.style.display = 'flex';
+        window.location.hash = 'home';
     } else if (viewName === 'about') {
         homeView.style.display = 'none';
         aboutView.style.display = 'block';
         contactView.style.display = 'none';
         searchGroup.style.display = 'none';
+        window.location.hash = 'about';
     } else if (viewName === 'contact') {
         homeView.style.display = 'none';
         aboutView.style.display = 'none';
         contactView.style.display = 'block';
         searchGroup.style.display = 'none';
+        window.location.hash = 'contact';
     }
 }
+
+function handleRouting() {
+    const hash = window.location.hash;
+    if (hash === '#about') {
+        switchView('about');
+    } else if (hash === '#contact') {
+        switchView('contact');
+    } else {
+        switchView('home');
+    }
+}
+
+window.addEventListener('DOMContentLoaded', handleRouting);
+window.addEventListener('hashchange', handleRouting);
 
 function searchRecommendations() {
     const keyword = document.getElementById('searchKeyword').value.toLowerCase().trim();
