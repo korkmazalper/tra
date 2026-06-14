@@ -263,6 +263,11 @@
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #00b4db;
         }
     </style>
 </head>
@@ -306,6 +311,12 @@
             <p style="line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
                 Global Wanderlust is a premier travel intelligence enterprise dedicated to bridges the gap between avid explorers and their idyllic vacation destinations. Founded by a group of passionate globetrotters and software engineers, our system processes cultural, visual, and geographic patterns to ensure your itinerary aligns with your deep travel desires.
             </p>
+
+            <h3 style="color: #00d2ff; margin-top: 25px; margin-bottom: 10px;">Guidance & Instructions for Team Members</h3>
+            <p style="line-height: 1.6; color: #d1d1d1; margin-bottom: 20px; font-size: 15px; background: rgba(255,255,255,0.05); padding: 15px; border-left: 4px solid #00d2ff; border-radius: 4px;">
+                <strong>Core Directive:</strong> All team members must ensure that travel data and imageUrl links inside the <code>travel_recommendation_api.json</code> file are verified weekly for 100% availability. When adding new city recommendations, descriptions must be kept under 150 characters, and images must use secure HTTPS protocols to maintain cross-origin integrity across our distributed web services.
+            </p>
+
             <h3>Our Expert Team</h3>
             <div class="team-grid">
                 <div class="team-member">
