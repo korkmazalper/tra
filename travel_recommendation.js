@@ -42,31 +42,44 @@ function searchRecommendations() {
         .then(response => response.json())
         .then(data => {
             console.log("Fetched API Data successfully:", data);
-            let matchedItems = [];
-            let timeZoneStr = '';
+            let resultsToDisplay = [];
 
             if (keyword === 'beach' || keyword === 'beaches') {
-                matchedItems = data.beaches;
+                data.beaches.forEach(item => resultsToDisplay.push({ item, tz: '' }));
             } else if (keyword === 'temple' || keyword === 'temples') {
-                matchedItems = data.temples;
+                data.temples.forEach(item => resultsToDisplay.push({ item, tz: '' }));
+            } else if (keyword === 'country' || keyword === 'countries') {
+                if (data.countries && data.countries.length >= 2) {
+                    const country1 = data.countries[0]; 
+                    const country2 = data.countries[1]; 
+                    
+                    if (country1.cities && country1.cities.length > 0) {
+                        resultsToDisplay.push({ item: country1.cities[0], tz: 'Australia/Sydney' });
+                    }
+                    if (country2.cities && country2.cities.length > 0) {
+                        resultsToDisplay.push({ item: country2.cities[0], tz: 'Asia/Tokyo' });
+                    }
+                }
             } else {
                 const foundCountry = data.countries.find(c => c.name.toLowerCase() === keyword);
                 if (foundCountry) {
-                    matchedItems = foundCountry.cities;
-                    if (keyword === 'australia') timeZoneStr = 'Australia/Sydney';
-                    if (keyword === 'japan') timeZoneStr = 'Asia/Tokyo';
-                    if (keyword === 'brazil') timeZoneStr = 'America/Sao_Paulo';
+                    let tz = '';
+                    if (keyword === 'australia') tz = 'Australia/Sydney';
+                    if (keyword === 'japan') tz = 'Asia/Tokyo';
+                    if (keyword === 'brazil') tz = 'America/Sao_Paulo';
+
+                    foundCountry.cities.forEach(item => resultsToDisplay.push({ item, tz }));
                 }
             }
 
-            if (matchedItems.length > 0) {
-                matchedItems.forEach(item => {
+            if (resultsToDisplay.length > 0) {
+                resultsToDisplay.forEach(({ item, tz }) => {
                     const card = document.createElement('div');
                     card.className = 'result-card';
                     
                     let timeHTML = '';
-                    if (timeZoneStr) {
-                        const options = { timeZone: timeZoneStr, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
+                    if (tz) {
+                        const options = { timeZone: tz, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
                         const localTime = new Date().toLocaleTimeString('en-US', options);
                         timeHTML = `<div class="time-badge">Local Time: ${localTime}</div>`;
                     }
@@ -84,7 +97,7 @@ function searchRecommendations() {
                     resultsContainer.appendChild(card);
                 });
             } else {
-                resultsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No matching recommendations found. Try searching "beach", "temple", "japan", "brazil" or "australia".</p>';
+                resultsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No matching recommendations found. Try searching "beach", "temple", "country", "japan", "brazil" or "australia".</p>';
             }
         })
         .catch(error => {
