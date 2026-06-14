@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
                         url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
@@ -26,12 +26,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             padding: 15px 30px;
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000;
+            z-index: 2000;
         }
 
         .nav-logo {
@@ -68,6 +68,7 @@
             border: none;
             border-radius: 4px;
             width: 250px;
+            color: #000;
         }
 
         .btn-search {
@@ -92,22 +93,23 @@
 
         .main-container {
             flex: 1;
-            padding: 120px 10% 40px 10%;
+            padding: 120px 8% 40px 8%;
+            z-index: 10;
         }
 
         .hero-section {
             max-width: 700px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .hero-section h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 44px;
+            margin-bottom: 15px;
             text-transform: uppercase;
         }
 
         .hero-section p {
-            font-size: 18px;
+            font-size: 17px;
             line-height: 1.6;
             margin-bottom: 20px;
             color: #e0e0e0;
@@ -122,10 +124,10 @@
         .social-icons a {
             color: #fff;
             text-decoration: none;
-            font-size: 20px;
+            font-size: 18px;
             background: rgba(255,255,255,0.2);
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -140,27 +142,36 @@
 
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            margin-top: 30px;
+            margin-top: 40px;
+            width: 100%;
         }
 
         .result-card {
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 8px;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            flex-direction: column;
         }
 
         .result-card img {
             width: 100%;
-            height: 220px;
+            height: 240px;
             object-fit: cover;
+            display: block;
+            background-color: #222;
         }
 
         .result-info {
-            padding: 20px;
+            padding: 22px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .result-info h3 {
@@ -172,26 +183,27 @@
         .result-info p {
             font-size: 15px;
             line-height: 1.5;
-            color: #d1d1d1;
-            margin-bottom: 12px;
+            color: #e0e0e0;
+            margin-bottom: 15px;
         }
 
         .time-badge {
-            display: inline-block;
-            background: rgba(0, 210, 255, 0.2);
+            align-self: flex-start;
+            background: rgba(0, 210, 255, 0.25);
             color: #00d2ff;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
             font-size: 13px;
             font-weight: bold;
         }
 
         .page-section {
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(15, 15, 15, 0.9);
             padding: 40px;
-            border-radius: 8px;
-            margin-top: 40px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
         }
 
         .page-section h2 {
@@ -242,10 +254,6 @@
             font-size: 16px;
         }
 
-        .contact-form input::placeholder, .contact-form textarea::placeholder {
-            color: #ccc;
-        }
-
         .contact-form button {
             background-color: #00d2ff;
             color: #000;
@@ -255,17 +263,12 @@
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .contact-form button:hover {
-            background-color: #00b4db;
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar" id="mainNavbar">
+    <nav class="navbar">
         <a href="#" class="nav-logo">🌐 Global Wanderlust</a>
         <div class="nav-links">
             <a href="#" id="linkHome">Home</a>
@@ -294,6 +297,7 @@
                     <a href="#">y</a>
                 </div>
             </section>
+            
             <div id="recommendationResults" class="results-grid"></div>
         </div>
 
