@@ -1,45 +1,27 @@
 document.getElementById('btnSearch').addEventListener('click', searchRecommendations);
 document.getElementById('btnClear').addEventListener('click', clearResults);
 
-document.getElementById('linkHome').addEventListener('click', () => switchView('home'));
-document.getElementById('linkAbout').addEventListener('click', () => switchView('about'));
-document.getElementById('linkContact').addEventListener('click', () => switchView('contact'));
+document.getElementById('linkHome').addEventListener('click', () => handleNavbarSearchVisibility('#home'));
+document.getElementById('linkAbout').addEventListener('click', () => handleNavbarSearchVisibility('#about'));
+document.getElementById('linkContact').addEventListener('click', () => handleNavbarSearchVisibility('#contact'));
 
-function switchView(viewName) {
-    const homeView = document.getElementById('homeView');
-    const aboutView = document.getElementById('aboutView');
-    const contactView = document.getElementById('contactView');
+function handleNavbarSearchVisibility(hash) {
     const searchGroup = document.getElementById('navSearchGroup');
-
-    if (viewName === 'home') {
-        homeView.style.display = 'block';
-        aboutView.style.display = 'none';
-        contactView.style.display = 'none';
-        searchGroup.style.display = 'flex';
-        if(window.location.hash !== '#home') window.location.hash = 'home';
-    } else if (viewName === 'about') {
-        homeView.style.display = 'none';
-        aboutView.style.display = 'block';
-        contactView.style.display = 'none';
-        searchGroup.style.display = 'none';
-        if(window.location.hash !== '#about') window.location.hash = 'about';
-    } else if (viewName === 'contact') {
-        homeView.style.display = 'none';
-        aboutView.style.display = 'none';
-        contactView.style.display = 'block';
-        searchGroup.style.display = 'none';
-        if(window.location.hash !== '#contact') window.location.hash = 'contact';
+    if (hash === '#about' || hash === '#contact') {
+        searchGroup.style.opacity = '0';
+        searchGroup.style.pointerEvents = 'none';
+    } else {
+        searchGroup.style.opacity = '1';
+        searchGroup.style.pointerEvents = 'auto';
     }
 }
 
 function handleRouting() {
-    const hash = window.location.hash;
-    if (hash === '#about') {
-        switchView('about');
-    } else if (hash === '#contact') {
-        switchView('contact');
-    } else {
-        switchView('home');
+    const hash = window.location.hash || '#home';
+    handleNavbarSearchVisibility(hash);
+    const element = document.querySelector(hash);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
@@ -66,16 +48,19 @@ function searchRecommendations() {
             } else if (keyword === 'temple' || keyword === 'temples') {
                 data.temples.forEach(item => resultsToDisplay.push({ item, tz: '' }));
             } else if (keyword === 'country' || keyword === 'countries') {
-                if (data.countries && data.countries.length >= 2) {
-                    const country1 = data.countries[0]; 
-                    const country2 = data.countries[1]; 
-                    
-                    if (country1.cities && country1.cities.length > 0) {
-                        resultsToDisplay.push({ item: country1.cities[0], tz: 'Australia/Sydney' });
-                    }
-                    if (country2.cities && country2.cities.length > 0) {
-                        resultsToDisplay.push({ item: country2.cities[0], tz: 'Asia/Tokyo' });
-                    }
+                if (data.countries) {
+                    data.countries.forEach(c => {
+                        let tz = '';
+                        if (c.name.toLowerCase() === 'australia') tz = 'Australia/Sydney';
+                        if (c.name.toLowerCase() === 'japan') tz = 'Asia/Tokyo';
+                        if (c.name.toLowerCase() === 'brazil') tz = 'America/Sao_Paulo';
+                        
+                        if (c.cities) {
+                            c.cities.forEach(city => {
+                                resultsToDisplay.push({ item: city, tz: tz });
+                            });
+                        }
+                    });
                 }
             } else {
                 const foundCountry = data.countries.find(c => c.name.toLowerCase() === keyword);
