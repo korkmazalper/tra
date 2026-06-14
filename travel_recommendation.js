@@ -55,6 +55,7 @@ function searchRecommendations() {
                     matchedItems = foundCountry.cities;
                     if (keyword === 'australia') timeZoneStr = 'Australia/Sydney';
                     if (keyword === 'japan') timeZoneStr = 'Asia/Tokyo';
+                    if (keyword === 'brazil') timeZoneStr = 'America/Sao_Paulo';
                 }
             }
 
@@ -71,17 +72,19 @@ function searchRecommendations() {
                     }
 
                     card.innerHTML = `
-                        <img src="${item.imageUrl}" alt="${item.name}">
+                        <img src="${item.imageUrl}" alt="${item.name}" onerror="this.src='https://picsum.photos/600/400?blur=1';">
                         <div class="result-info">
-                            <h3>${item.name}</h3>
-                            <p>${item.description}</p>
+                            <div>
+                                <h3>${item.name}</h3>
+                                <p>${item.description}</p>
+                            </div>
                             ${timeHTML}
                         </div>
                     `;
                     resultsContainer.appendChild(card);
                 });
             } else {
-                resultsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No matching recommendations found. Try searching "beach", "temple", "japan", or "australia".</p>';
+                resultsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No matching recommendations found. Try searching "beach", "temple", "japan", "brazil" or "australia".</p>';
             }
         })
         .catch(error => {
