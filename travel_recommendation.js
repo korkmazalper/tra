@@ -16,19 +16,19 @@ function switchView(viewName) {
         aboutView.style.display = 'none';
         contactView.style.display = 'none';
         searchGroup.style.display = 'flex';
-        window.location.hash = 'home';
+        if(window.location.hash !== '#home') window.location.hash = 'home';
     } else if (viewName === 'about') {
         homeView.style.display = 'none';
         aboutView.style.display = 'block';
         contactView.style.display = 'none';
         searchGroup.style.display = 'none';
-        window.location.hash = 'about';
+        if(window.location.hash !== '#about') window.location.hash = 'about';
     } else if (viewName === 'contact') {
         homeView.style.display = 'none';
         aboutView.style.display = 'none';
         contactView.style.display = 'block';
         searchGroup.style.display = 'none';
-        window.location.hash = 'contact';
+        if(window.location.hash !== '#contact') window.location.hash = 'contact';
     }
 }
 
@@ -43,7 +43,7 @@ function handleRouting() {
     }
 }
 
-window.addEventListener('DOMContentLoaded', handleRouting);
+window.addEventListener('load', handleRouting);
 window.addEventListener('hashchange', handleRouting);
 
 function searchRecommendations() {
